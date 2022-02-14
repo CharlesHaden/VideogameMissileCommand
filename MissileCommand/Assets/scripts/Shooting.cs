@@ -6,13 +6,16 @@ public class Shooting : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject playerMissilePrefab;
+    public GameObject targetPrefab;
     public float missileForce = 20f;
     public float fireRate = 0.5f;
     private float nextFire = 0.0f;
     public static int MaxAmmo = 5;
     private int amunition = MaxAmmo;
+    private Vector3 mousePos;
+    private Vector3 objectPos;
     // Update is called once per frame
-  
+
     void Update()
     {
         
@@ -21,6 +24,7 @@ public class Shooting : MonoBehaviour
             
             
             nextFire = Time.time + fireRate;
+           
             shoot();
             amunition --;
             
@@ -46,6 +50,7 @@ public class Shooting : MonoBehaviour
 
     void shoot()
     {
+        
         GameObject playerMissile = Instantiate(playerMissilePrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rbMissile =  playerMissile.GetComponent<Rigidbody2D>();
         rbMissile.AddForce(firePoint.up * missileForce, ForceMode2D.Impulse);
