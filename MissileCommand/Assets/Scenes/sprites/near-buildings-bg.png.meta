@@ -39,6 +39,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -232,6 +233,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      near-buildings-bg_2: -6699097580721481067
+      near-buildings-bg_1: 1523336376783092178
+      near-buildings-bg_4: 5039068060066335562
+      near-buildings-bg_3: 1789158833055147444
+      near-buildings-bg_0: -480026947694649183
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

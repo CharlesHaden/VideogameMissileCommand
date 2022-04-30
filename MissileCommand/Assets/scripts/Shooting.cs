@@ -7,7 +7,6 @@ public class Shooting : MonoBehaviour
     public Transform firePoint;
     public GameObject playerMissilePrefab;
     public GameObject targetPrefab;
-    public float missileForce = 20f;
     public float fireRate = 0.5f;
     private float nextFire = 0.0f;
     public static int MaxAmmo = 5;
@@ -52,7 +51,6 @@ public class Shooting : MonoBehaviour
     {
         
         GameObject playerMissile = Instantiate(playerMissilePrefab, firePoint.position, firePoint.rotation);
-        Rigidbody2D rbMissile =  playerMissile.GetComponent<Rigidbody2D>();
-        rbMissile.AddForce(firePoint.up * missileForce, ForceMode2D.Impulse);
+       
     }
 }
