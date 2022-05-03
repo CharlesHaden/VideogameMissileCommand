@@ -6,11 +6,13 @@ public class missile : MonoBehaviour
 {
     private Vector2 target;
     public GameObject hitEffect;
+    private GameObject[] city;
     [SerializeField] private float speed = 1f;
 
     private void Start()
     {
         target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        city = GameObject.FindGameObjectsWithTag("City");
     }
     private void FixedUpdate()
     {
@@ -18,14 +20,9 @@ public class missile : MonoBehaviour
         if (transform.position == (Vector3)target)
         {
             GameObject explosion = Instantiate(hitEffect, transform.position, Quaternion.identity);
-            Destroy(explosion, 0.25f);
+            Destroy(explosion, 0.60f);
             Destroy(gameObject);
         }
     }
-    private void OnCollisionEnter2D(Collision2D hit)
-    {
-        GameObject explosion = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        Destroy(explosion, 0.25f);
-        Destroy(gameObject);
-    }
+    
 }

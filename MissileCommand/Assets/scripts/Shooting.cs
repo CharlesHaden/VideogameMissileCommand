@@ -9,27 +9,33 @@ public class Shooting : MonoBehaviour
     public GameObject targetPrefab;
     public float fireRate = 0.5f;
     private float nextFire = 0.0f;
-    public static int MaxAmmo = 5;
-    private int amunition = MaxAmmo;
+    public static int ClipSize = 5;
+    private int amunition = ClipSize;
+    private int MaxAmmo = 1;
     private Vector3 mousePos;
     private Vector3 objectPos;
     // Update is called once per frame
 
+
+    void Start()
+    {
+        amunition = MaxAmmo;
+    }
     void Update()
     {
         
-        if (Input.GetButtonDown("Fire1")&& nextFire <= Time.time && amunition != 0)
+        if (Input.GetButtonDown("Fire1")&& nextFire <= Time.time && ClipSize != 0 && amunition != 0)
         {
             
             
             nextFire = Time.time + fireRate;
            
             shoot();
-            amunition --;
+            ClipSize --;
             
          
         }
-        else if(Input.GetButtonDown("Fire1") && nextFire <= Time.time && amunition == 0)
+        else if(Input.GetButtonDown("Fire1") && nextFire <= Time.time && ClipSize == 0 && amunition != 0)
         {
             StartCoroutine(ExampleCoroutine());
             
@@ -43,7 +49,7 @@ public class Shooting : MonoBehaviour
 
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(1.5f);
-        amunition = MaxAmmo;
+        ClipSize = 5;
 
     }
 
@@ -52,5 +58,15 @@ public class Shooting : MonoBehaviour
         
         GameObject playerMissile = Instantiate(playerMissilePrefab, firePoint.position, firePoint.rotation);
        
+    }
+
+    private void setMaxAmmo(int roundAmmo)
+    {
+        MaxAmmo = roundAmmo;
+    }
+    
+    private int getAmunition()
+    {
+        return amunition;
     }
 }

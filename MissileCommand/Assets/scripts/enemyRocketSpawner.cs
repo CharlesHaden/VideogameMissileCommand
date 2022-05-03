@@ -8,6 +8,9 @@ public class enemyRocketSpawner : MonoBehaviour
     private float screenMin_X;
     private float screenMax_X;
     [SerializeField] private float padding = 0.5f;
+    private int missilesToSpawn = 10;
+    [SerializeField] private float delay = 0.5f;
+    private float ySpawnValue;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,9 +18,9 @@ public class enemyRocketSpawner : MonoBehaviour
         screenMin_X = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).x;
         
         float randomspawn = Random.Range(screenMin_X, screenMax_X); 
-        float ySpawnvalue = Camera.main.ViewportToWorldPoint(new Vector3(0,1,0)).y;
+        ySpawnValue = Camera.main.ViewportToWorldPoint(new Vector3(0,1,0)).y;
 
-        Instantiate(missilePrefab, new Vector3(randomspawn, ySpawnvalue*padding, 0), Quaternion.identity);
+        StartCoroutine(EnemySpawn());
     }
     
     // Update is called once per frame
@@ -25,4 +28,26 @@ public class enemyRocketSpawner : MonoBehaviour
     {
         
     }
+    IEnumerator EnemySpawn()
+    {
+        while(missilesToSpawn > 0)
+        {
+            screenMax_X = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)).x;
+            screenMin_X = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).x;
+
+            float randomspawn = Random.Range(screenMin_X, screenMax_X);
+            
+
+            Instantiate(missilePrefab, new Vector3(randomspawn, ySpawnValue * padding, 0), Quaternion.identity);
+            missilesToSpawn--;
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
+    public void setMissilesToSpawn(int toSpawn)
+    {
+        missilesToSpawn = toSpawn;  
+    }
+
+
 }
