@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI highScoreText;
-   
+    
     // Start is called before the first frame update
     void Start()
     {

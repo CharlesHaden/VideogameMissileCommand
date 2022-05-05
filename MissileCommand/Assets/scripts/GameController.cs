@@ -14,10 +14,12 @@ public class GameController : MonoBehaviour
     private float enemyMissileSpeedMultiplier = 1.5f;
     private float enemyMissileSpeed = 1f;
     private enemyRocketSpawner missileSpawner;
+    private BuffNerfSpawner buffNerfSpawner;
     private int leftOverMissileBonus = 0;
     private int leftOverBuildingsBonus = 0;
     private int totalBonus = 0;
     private bool roundOver = false;
+    private int buffsNerfs = 4;
     buildings[] city;
     [SerializeField] private int leftOverMissilePoints = 5;
     [SerializeField] private int leftOverBuildingsPoints = 15;
@@ -29,13 +31,15 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buildingBonusText;
     [SerializeField] private TextMeshProUGUI totalBonusText;
     [SerializeField] private TextMeshProUGUI endOfRoundCountText;
+    [SerializeField] private TextMeshProUGUI buffText;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
         
         missileSpawner = FindObjectOfType<enemyRocketSpawner>();
+        buffNerfSpawner = FindObjectOfType<BuffNerfSpawner>(); 
         UpdateScore();
         UpdateRound();
         UpdateMissilesLeft();
@@ -67,7 +71,10 @@ public class GameController : MonoBehaviour
         UpdateScore();
         missileSpawner.SetMissilesToSpawn(maxEnemyMissilesThisRound);
         enemyMissilesLeft = maxEnemyMissilesThisRound;
+        buffNerfSpawner.setBuffNerfsTospawn(buffsNerfs);
         missileSpawner.roundBegin();
+        buffNerfSpawner.roundBeginBuffNerf();
+        
     }
 
     public int GetPlayerMissilesLeft()
@@ -151,5 +158,24 @@ public class GameController : MonoBehaviour
     public float GetMissileSpeed()
     {
         return enemyMissileSpeed;
+    }
+    public void SetMissileSpeed(float speed)
+    {
+        enemyMissileSpeed = speed;
+    }
+
+    public void ShowBuff(string buffType)
+    {
+        buffText.text = buffType;
+        buffText.gameObject.SetActive(true);
+    }
+    public void hideBuff()
+    {
+        
+        buffText.gameObject.SetActive(false);
+    }
+    public bool GetRoundOver()
+    {
+        return roundOver;
     }
 }

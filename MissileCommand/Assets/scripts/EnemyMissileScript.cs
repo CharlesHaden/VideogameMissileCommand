@@ -44,6 +44,7 @@ public class EnemyMissileScript : MonoBehaviour
     // Update is called once per frame 
     void FixedUpdate()
     {
+        speed = gameController.GetMissileSpeed();
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
      
     }

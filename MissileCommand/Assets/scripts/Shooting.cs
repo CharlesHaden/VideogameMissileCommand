@@ -13,8 +13,10 @@ public class Shooting : MonoBehaviour
     private Vector3 objectPos;
     private GameController gameController;
     private int amunition=0;
+    
     [SerializeField] private float reloadTime = 1f;
     [SerializeField] private TextMeshProUGUI reloadingText;
+    [SerializeField] private GameObject laserPrefab;
     
     // Update is called once per frame
 
@@ -63,12 +65,22 @@ public class Shooting : MonoBehaviour
     void shoot()
     {
         
-        GameObject playerMissile = Instantiate(playerMissilePrefab, firePoint.position, firePoint.rotation);
+       GameObject playerMissile = Instantiate(playerMissilePrefab, firePoint.position, firePoint.rotation);
        
     }
 
     public void setFireRate(float newRate)
     {
         fireRate = newRate;
+    }
+
+    public int GetClip()
+    {
+        return(ClipSize);
+    }
+
+    public void SetClip(int clip)
+    {
+        ClipSize = clip;
     }
 }
