@@ -44,28 +44,28 @@ public class Shooting : MonoBehaviour
         }
         else if(Input.GetButtonDown("Fire1") && nextFire < Time.time && ClipSize == 0 && amunition > 0)
         {
-            StartCoroutine(ExampleCoroutine());
+            StartCoroutine(Reload());
             
             
         }
         
     }
 
-    IEnumerator ExampleCoroutine()
+    IEnumerator Reload()
     {
 
+        
         reloadingText.gameObject.SetActive(true);
         yield return new WaitForSeconds(reloadTime);
         reloadingText.gameObject.SetActive(false);
-
         ClipSize = 5;
 
     }
 
     void shoot()
     {
-        
-       GameObject playerMissile = Instantiate(playerMissilePrefab, firePoint.position, firePoint.rotation);
+        gameController.GetComponent<gameEventManager>().missileFired();
+        GameObject playerMissile = Instantiate(playerMissilePrefab, firePoint.position, firePoint.rotation);
        
     }
 

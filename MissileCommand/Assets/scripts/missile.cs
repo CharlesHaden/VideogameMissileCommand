@@ -6,13 +6,16 @@ public class missile : MonoBehaviour
 {
     private Vector2 target;
     public GameObject hitEffect;
-    private GameObject[] city;
+    
     [SerializeField] private float speed = 1f;
+    private GameController gameController;
 
     private void Start()
     {
+        gameController = GameObject.FindObjectOfType<GameController>();
+        speed = gameController.getPlayerMissileSpeed();
         target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        city = GameObject.FindGameObjectsWithTag("City");
+        
     }
     private void FixedUpdate()
     {

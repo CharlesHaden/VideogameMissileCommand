@@ -7,6 +7,7 @@ TagManager:
   - City
   - explosion
   - playerMissile
+  - poi
   layers:
   - Default
   - TransparentFX

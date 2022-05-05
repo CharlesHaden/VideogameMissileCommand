@@ -52,8 +52,8 @@ public class EnemyMissileScript : MonoBehaviour
     {
         if(hit.tag == "City")
         {
-            
-            
+
+            gameController.GetComponent<gameEventManager>().buildingDestroyed();
             destroyMissile();
             Destroy(hit.gameObject);
             

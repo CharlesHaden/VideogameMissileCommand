@@ -12,6 +12,8 @@ public class BuffNerfSpawner : MonoBehaviour
     [SerializeField] private timeFreezeSlowUP timeSlowBuff;
     [SerializeField] private BottomlessClip bottomlessClipBuff;
     [SerializeField] private maxFireRate maxFireRateBuff;
+    [SerializeField] private slowPlauerMissile slowPlayerNerf;
+    [SerializeField] private blindPlayer blindPlayerNerf;
     private float ySpawnValue;
     void Awake()
     {
@@ -41,7 +43,7 @@ public class BuffNerfSpawner : MonoBehaviour
         {
             screenMax_X = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)).x;
             screenMin_X = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).x;
-            float spawnBuffNerf = Random.Range(0, 3);
+            float spawnBuffNerf = Random.Range(0, 5);
             float randomspawn = Random.Range(screenMin_X, screenMax_X);
             switch (spawnBuffNerf)
             {
@@ -56,6 +58,12 @@ public class BuffNerfSpawner : MonoBehaviour
                 case 2:
                     Instantiate(maxFireRateBuff, new Vector3(randomspawn, ySpawnValue * padding, 0), Quaternion.identity);
                     buffNerfsToSpawn--;
+                    break;
+                case 3:
+                    Instantiate(slowPlayerNerf, new Vector3(randomspawn, ySpawnValue * padding, 0), Quaternion.identity);
+                    break;
+                case 4:
+                    Instantiate(blindPlayerNerf, new Vector3(randomspawn, ySpawnValue * padding, 0), Quaternion.identity);
                     break;
             }
             

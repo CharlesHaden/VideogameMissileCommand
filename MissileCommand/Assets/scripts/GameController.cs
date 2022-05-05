@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     private int totalBonus = 0;
     private bool roundOver = false;
     private int buffsNerfs = 4;
+    [SerializeField]private float playerMissileSpeed = 1f;
     buildings[] city;
     [SerializeField] private int leftOverMissilePoints = 5;
     [SerializeField] private int leftOverBuildingsPoints = 15;
@@ -32,6 +33,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalBonusText;
     [SerializeField] private TextMeshProUGUI endOfRoundCountText;
     [SerializeField] private TextMeshProUGUI buffText;
+    [SerializeField] private TextMeshProUGUI nerfText;
+    [SerializeField] private GameObject blindPanel;
 
 
     // Start is called before the first frame update
@@ -126,7 +129,12 @@ public class GameController : MonoBehaviour
         RoundStart();
 
         // update for round
+        this.GetComponent<gameEventManager>().roundAchieved();
         round++;
+        if (round > 1)
+        {
+
+        }
         playerMissilesLeft = maxPlayerMissiles;
         IncreaseMissileSpeed(enemyMissileSpeed);
         UpdateRound();
@@ -178,4 +186,34 @@ public class GameController : MonoBehaviour
     {
         return roundOver;
     }
+    
+    public float getPlayerMissileSpeed()
+    {
+        return playerMissileSpeed;
+    }
+    public void setPlayerMissileSpeed(float speed)
+    {
+        playerMissileSpeed = speed;
+    }
+    public void ShowNerf(string nerfType)
+    {
+        nerfText.text = nerfType;
+        nerfText.gameObject.SetActive(true);
+    }
+    public void hideNerf()
+    {
+
+        nerfText.gameObject.SetActive(false);
+    }
+    public void ShowBlind()
+    {
+        blindPanel.SetActive(true);
+    }
+    public void hideBlind()
+    {
+
+        blindPanel.SetActive(false);
+    }
+
+
 }
