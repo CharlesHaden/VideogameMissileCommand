@@ -8,12 +8,17 @@ public class EnemyMissileScript : MonoBehaviour
     [SerializeField] private float speed = 1f;
     private GameObject[] city;
     private Vector3 target;
+    private GameController gameController;
+    [SerializeField] private int points = 1;
+    
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GameObject.FindObjectOfType<GameController>();
+        speed = gameController.GetMissileSpeed();
         city = GameObject.FindGameObjectsWithTag("City");
         target = city[Random.Range(0, city.Length)].transform.position;
         
@@ -30,8 +35,10 @@ public class EnemyMissileScript : MonoBehaviour
         if (transform.position.x == target.x && transform.position.y == target.y)
         {
             destroyMissile();
+            
         }
 
+        
     }
 
     // Update is called once per frame 
@@ -44,21 +51,35 @@ public class EnemyMissileScript : MonoBehaviour
     {
         if(hit.tag == "City")
         {
+            
+            
             destroyMissile();
             Destroy(hit.gameObject);
+            
+
         }
         else if(hit.tag == "explosion")
         {
+            
             destroyMissile();
+            gameController.addScore(points);
             
         }
     }
 
     private void destroyMissile()
     {
+        
         GameObject explosion = Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(explosion, 0.50f);
         Destroy(gameObject);
+        gameController.removeEnemyMissile();
+       
+ 
+        
+        
     }
+
+   
 
 }

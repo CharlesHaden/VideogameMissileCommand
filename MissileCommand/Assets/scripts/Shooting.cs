@@ -1,54 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Shooting : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject playerMissilePrefab;
-    public GameObject targetPrefab;
-    public float fireRate = 0.5f;
+    private float fireRate = 0.5f;
     private float nextFire = 0.0f;
     public static int ClipSize = 5;
-    private int amunition = ClipSize;
-    private int MaxAmmo = 1;
     private Vector3 mousePos;
     private Vector3 objectPos;
+    private GameController gameController;
+    private int amunition=0;
+    [SerializeField] private float reloadTime = 1f;
+    [SerializeField] private TextMeshProUGUI reloadingText;
+    
     // Update is called once per frame
 
 
     void Start()
     {
-        amunition = MaxAmmo;
+        gameController = GameObject.FindObjectOfType<GameController>();
+        amunition = gameController.GetPlayerMissilesLeft();
+        
     }
     void Update()
     {
         
-        if (Input.GetButtonDown("Fire1")&& nextFire <= Time.time && ClipSize != 0 && amunition != 0)
+        if (Input.GetButtonDown("Fire1")&& Time.time > nextFire && ClipSize != 0 && amunition >0)
         {
             
             
-            nextFire = Time.time + fireRate;
+            nextFire =  Time.time + fireRate;
            
             shoot();
             ClipSize --;
-            
+            amunition --;
+            gameController.SetPlayerMissilesLeft(amunition);
          
         }
-        else if(Input.GetButtonDown("Fire1") && nextFire <= Time.time && ClipSize == 0 && amunition != 0)
+        else if(Input.GetButtonDown("Fire1") && nextFire < Time.time && ClipSize == 0 && amunition > 0)
         {
             StartCoroutine(ExampleCoroutine());
             
             
         }
+        
     }
 
     IEnumerator ExampleCoroutine()
     {
-       
 
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(1.5f);
+        reloadingText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(reloadTime);
+        reloadingText.gameObject.SetActive(false);
+
         ClipSize = 5;
 
     }
@@ -60,13 +67,8 @@ public class Shooting : MonoBehaviour
        
     }
 
-    private void setMaxAmmo(int roundAmmo)
+    public void setFireRate(float newRate)
     {
-        MaxAmmo = roundAmmo;
-    }
-    
-    private int getAmunition()
-    {
-        return amunition;
+        fireRate = newRate;
     }
 }
